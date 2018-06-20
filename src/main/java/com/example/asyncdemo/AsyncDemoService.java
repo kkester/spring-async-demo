@@ -7,6 +7,7 @@ import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.context.event.ApplicationEventMulticaster;
+import org.springframework.messaging.MessageHandlingException;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.annotation.Async;
@@ -59,7 +60,11 @@ public class AsyncDemoService {
 
     @SendTo(Source.OUTPUT)
     public void sendMessage(JobEntity job) {
-        source.output().send(MessageBuilder.withPayload(job).build());
+        try {
+            source.output().send(MessageBuilder.withPayload(job).build());
+        } catch (MessageHandlingException e) {
+            job.setStatus("failed");
+        }
     }
 
     public Collection<JobEntity> getJobs() {

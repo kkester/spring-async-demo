@@ -16,7 +16,7 @@ public class AsyncDemoConfig {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(2);
         executor.setMaxPoolSize(2);
-        executor.setQueueCapacity(2);
+//        executor.setQueueCapacity(4);
         executor.setThreadNamePrefix("async-doing");
         executor.initialize();
         return executor;
