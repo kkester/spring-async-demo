@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: async-demo
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: job-queue
+        input:
+          destination: job-queue
