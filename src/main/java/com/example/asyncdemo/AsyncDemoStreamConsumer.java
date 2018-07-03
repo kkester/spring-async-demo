@@ -26,7 +26,7 @@ import java.util.concurrent.Executor;
 
 @Component
 @EnableBinding(Sink.class)
-public class AsyncDemoStream {
+public class AsyncDemoStreamConsumer {
 
     @Autowired
     private AsyncDemoService service;
@@ -34,11 +34,9 @@ public class AsyncDemoStream {
     @StreamListener(Sink.INPUT)
     public void handle(JobEntity job) {
         System.out.println("Stream starting on " + Thread.currentThread().getName());
-        try {
-            service.processJob(job.getId());
-        } catch (TaskRejectedException e) {
-            service.sendMessage(job);
-        }
+
+        service.processJob(job.getId());
+
         System.out.println("Stream Completing  on " + Thread.currentThread().getName());
     }
 

@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@EnableBinding(Source.class)
 public class AsyncDemoService {
 
     @Autowired
@@ -29,7 +28,7 @@ public class AsyncDemoService {
     private JobEntityRepository jobRepository;
 
     @Autowired
-    private Source source;
+    private AsyncDemoStreamProducer producer;
 
     public JobEntity createJob() {
 
@@ -38,7 +37,7 @@ public class AsyncDemoService {
         JobEntity job = new JobEntity();
         job.setStatus("New");
         jobRepository.save(job);
-        sendMessage(job);
+        producer.sendMessage(job);
 
         System.out.println("Completing " + Thread.currentThread().getName());
 
@@ -56,15 +55,6 @@ public class AsyncDemoService {
         applicationEventPublisher.multicastEvent(new AsyncDemoEvent(job));
 
         System.out.println("Completing " + Thread.currentThread().getName());
-    }
-
-    @SendTo(Source.OUTPUT)
-    public void sendMessage(JobEntity job) {
-        try {
-            source.output().send(MessageBuilder.withPayload(job).build());
-        } catch (MessageHandlingException e) {
-            job.setStatus("failed");
-        }
     }
 
     public Collection<JobEntity> getJobs() {
