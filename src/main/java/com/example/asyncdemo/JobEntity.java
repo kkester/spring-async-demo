@@ -1,7 +1,10 @@
 package com.example.asyncdemo;
 
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 public class JobEntity {
 
     private Integer id;
@@ -14,31 +17,4 @@ public class JobEntity {
         this.updated = new Date();
     }
 
-    public Date getCreated() {
-        return created;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

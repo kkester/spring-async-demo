@@ -1,5 +1,6 @@
 package com.example.asyncdemo;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
@@ -26,6 +27,7 @@ import java.util.concurrent.Executor;
 
 @Component
 @EnableBinding(Sink.class)
+@Slf4j
 public class AsyncDemoStreamConsumer {
 
     @Autowired
@@ -33,11 +35,11 @@ public class AsyncDemoStreamConsumer {
 
     @StreamListener(Sink.INPUT)
     public void handle(JobEntity job) {
-        System.out.println("Stream starting on " + Thread.currentThread().getName());
+        log.info("Stream starting on " + Thread.currentThread().getName());
 
         service.processJob(job.getId());
 
-        System.out.println("Stream Completing  on " + Thread.currentThread().getName());
+        log.info("Stream Completing  on " + Thread.currentThread().getName());
     }
 
 }
