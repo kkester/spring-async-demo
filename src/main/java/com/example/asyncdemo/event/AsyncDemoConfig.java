@@ -7,19 +7,17 @@ import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 @Configuration
 public class AsyncDemoConfig {
 
     @Bean
     public Executor asyncExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(2);
-        executor.setMaxPoolSize(2);
-//        executor.setQueueCapacity(4);
-        executor.setThreadNamePrefix("async-doing");
-        executor.initialize();
-        return executor;
+        ThreadFactory factory = Thread.ofVirtual().name("virtual-task").factory();
+        return Executors.newThreadPerTaskExecutor(factory);
     }
 
     @Bean

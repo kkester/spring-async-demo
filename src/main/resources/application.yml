@@ -3,3 +3,6 @@ spring:
     name: async-demo
   rabbitmq:
     host: ${RABBIT_HOST:localhost}
+  threads:
+    virtual:
+      enabled: true

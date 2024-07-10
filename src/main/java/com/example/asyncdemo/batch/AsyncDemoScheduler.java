@@ -25,7 +25,7 @@ public class AsyncDemoScheduler {
             log.info("Scheduler task rejected due to", ex);
         }
 
-        log.info("Scheduler finished");
+        log.info("Scheduler finished. VT: {}", Thread.currentThread().isVirtual());
     }
 
 }

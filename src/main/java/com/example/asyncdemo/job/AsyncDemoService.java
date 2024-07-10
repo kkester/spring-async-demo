@@ -6,11 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.ApplicationEventMulticaster;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +49,6 @@ public class AsyncDemoService {
         return this.jobRepository.getJobs();
     }
 
-    @Async
     @SneakyThrows
     public void processJob(Integer jobId) {
 
@@ -59,13 +56,12 @@ public class AsyncDemoService {
         boolean failed = JobStatus.NEW.equals(job.getStatus());
         job.applyStatus(JobStatus.PROCESSING);
         for (int i = 1; i < 11; i++) {
-            log.info("Processing Job in {} Status on Iteration {}", job.getStatus(), i);
+            log.info("Processing Job in {} Status on Iteration {}. VT: {}", job.getStatus(), i, Thread.currentThread().isVirtual());
             Thread.sleep(1);
         }
         job.applyStatus(failed ? JobStatus.FAILED : JobStatus.DONE);
     }
 
-    @Async
     public void retryFailedJobs() {
         Collection<JobEntity> jobs = jobRepository.getJobsByStatus(JobStatus.FAILED);
         jobs.forEach(j -> this.processJob(j.getId()));

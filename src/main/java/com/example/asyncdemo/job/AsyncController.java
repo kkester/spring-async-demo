@@ -31,7 +31,7 @@ public class AsyncController {
 
         JobEntity job = this.asyncDemoService.createJob();
 
-        log.info("Completed job creation for {}", job);
+        log.info("Completed job creation for {}. VT: {}", job, Thread.currentThread().isVirtual());
 
         return ResponseEntity.ok(job);
     }
@@ -47,7 +47,7 @@ public class AsyncController {
             this.asyncDemoService.editJob(id, jobData);
         }
 
-        log.info("Completed Job Update");
+        log.info("Completed Job Update. VT: {}", Thread.currentThread().isVirtual());
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

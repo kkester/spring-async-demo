@@ -15,7 +15,7 @@ public class AsyncDemoEventListener {
 
     @EventListener
     public void onApplicationEvent(AsyncDemoEvent event) {
-        log.info("Triggering Application Event for Job {}", event.getJobId());
+        log.info("Processing Application Event for Job {}. VT: {}", event.getJobId(), Thread.currentThread().isVirtual());
         asyncDemoService.processJob(event.getJobId());
     }
 }

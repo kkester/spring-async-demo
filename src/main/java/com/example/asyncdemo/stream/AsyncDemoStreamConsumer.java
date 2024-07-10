@@ -22,7 +22,6 @@ public class AsyncDemoStreamConsumer {
 
         service.processJob(job.getId());
 
-        log.info("Stream Completing for job {}", job);
+        log.info("Stream Completing for job {}. VT: {}", job, Thread.currentThread().isVirtual());
     }
-
 }
