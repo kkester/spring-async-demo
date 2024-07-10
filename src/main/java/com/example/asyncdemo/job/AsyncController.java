@@ -1,7 +1,7 @@
-package com.example.asyncdemo;
+package com.example.asyncdemo.job;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 @RestController
+@RequiredArgsConstructor
 @Slf4j
 public class AsyncController {
 
-    @Autowired
-    private AsyncDemoService asyncDemoService;
+    private final AsyncDemoService asyncDemoService;
 
     @GetMapping(value = "/jobs")
     public ResponseEntity<Collection<JobEntity>> getJobs() {
@@ -27,11 +27,11 @@ public class AsyncController {
     @PostMapping(value = "/jobs")
     public ResponseEntity<JobEntity> createJob() {
 
-        log.info("Starting on" + Thread.currentThread().getName());
+        log.info("Starting job creation");
 
         JobEntity job = this.asyncDemoService.createJob();
 
-        log.info("Completing on" + Thread.currentThread().getName());
+        log.info("Completed job creation for {}", job);
 
         return ResponseEntity.ok(job);
     }
@@ -39,7 +39,7 @@ public class AsyncController {
     @PostMapping(value = "/jobs/{id}")
     public ResponseEntity<Void> processJob(@PathVariable Integer id, @RequestBody(required = false) JobEntity jobData) {
 
-        log.info("Starting on" + Thread.currentThread().getName());
+        log.info("Starting Job Update");
 
         if (jobData == null) {
             this.asyncDemoService.processJob(id);
@@ -47,7 +47,7 @@ public class AsyncController {
             this.asyncDemoService.editJob(id, jobData);
         }
 
-        log.info("Completing on" + Thread.currentThread().getName());
+        log.info("Completed Job Update");
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

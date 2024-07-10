@@ -1,17 +1,15 @@
-package com.example.asyncdemo;
+package com.example.asyncdemo.job;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-@Service
+@Component
 public class JobEntityRepository {
 
-    private Map<Integer,JobEntity> jobs = new HashMap<>();
+    private Map<Integer, JobEntity> jobs = new HashMap<>();
 
     public JobEntity get(Integer id) {
         return jobs.get(id);
@@ -21,14 +19,16 @@ public class JobEntityRepository {
         return jobs.values();
     }
 
-    public Collection<JobEntity> getJobsByStatus(String status) {
+    public Collection<JobEntity> getJobsByStatus(JobStatus status) {
         return this.getJobs().stream()
-                .filter(j -> status.equalsIgnoreCase(j.getStatus()))
-                .collect(Collectors.toList());
+            .filter(j -> status.equals(j.getStatus()))
+            .toList();
     }
 
     public JobEntity save(JobEntity job) {
-        job.setId(jobs.size()+1);
+        if (job.getId() == null) {
+            job.setId(jobs.size() + 1);
+        }
         jobs.put(job.getId(), job);
         return job;
     }

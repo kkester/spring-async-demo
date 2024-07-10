@@ -1,4 +1,4 @@
-package com.example.asyncdemo;
+package com.example.asyncdemo.event;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +22,10 @@ public class AsyncDemoConfig {
         return executor;
     }
 
-    @Bean(name = "applicationEventMulticaster")
-    public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
+    @Bean
+    public ApplicationEventMulticaster applicationEventMulticaster(Executor asyncExecutor) {
         SimpleApplicationEventMulticaster eventMulticaster = new SimpleApplicationEventMulticaster();
-        eventMulticaster.setTaskExecutor(this.asyncExecutor());
+        eventMulticaster.setTaskExecutor(asyncExecutor);
         return eventMulticaster;
     }
 
