@@ -38,10 +38,10 @@ Sample Logging Output for Job Creation:
 ```text
 2024-07-10T10:41:44.104-05:00  INFO 35811 --- [async-demo] [tomcat-handler-0] c.example.asyncdemo.job.AsyncController  : Starting job creation
 2024-07-10T10:41:44.104-05:00  INFO 35811 --- [async-demo] [tomcat-handler-0] c.e.asyncdemo.job.AsyncDemoService       : Creating Job
-2024-07-10T10:41:44.105-05:00  INFO 35811 --- [async-demo] [    virtual-task] c.e.a.event.AsyncDemoEventListener       : Processing Application Event for Job 1. VT: true
-2024-07-10T10:41:44.105-05:00  INFO 35811 --- [async-demo] [    virtual-task] c.e.asyncdemo.job.AsyncDemoService       : Processing Job in PROCESSING Status on Iteration 1. VT: true
+2024-07-10T10:41:44.105-05:00  INFO 35811 --- [async-demo] [  virtual-task-1] c.e.a.event.AsyncDemoEventListener       : Processing Application Event for Job 1. VT: true
+2024-07-10T10:41:44.105-05:00  INFO 35811 --- [async-demo] [  virtual-task-1] c.e.asyncdemo.job.AsyncDemoService       : Processing Job in PROCESSING Status on Iteration 1. VT: true
 2024-07-10T10:41:44.105-05:00  INFO 35811 --- [async-demo] [tomcat-handler-0] c.e.asyncdemo.job.AsyncDemoService       : Completed Creating job 1
-2024-07-10T10:41:44.121-05:00  INFO 35811 --- [async-demo] [    virtual-task] c.e.asyncdemo.job.AsyncDemoService       : Processing Job in PROCESSING Status on Iteration 10. VT: true
+2024-07-10T10:41:44.121-05:00  INFO 35811 --- [async-demo] [  virtual-task-1] c.e.asyncdemo.job.AsyncDemoService       : Processing Job in PROCESSING Status on Iteration 10. VT: true
 ```
 
 Sample Logging Output for Job Update:

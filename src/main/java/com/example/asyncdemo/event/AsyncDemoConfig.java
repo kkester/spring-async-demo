@@ -4,10 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
@@ -16,7 +14,7 @@ public class AsyncDemoConfig {
 
     @Bean
     public Executor asyncExecutor() {
-        ThreadFactory factory = Thread.ofVirtual().name("virtual-task").factory();
+        ThreadFactory factory = Thread.ofVirtual().name("virtual-task-", 1).factory();
         return Executors.newThreadPerTaskExecutor(factory);
     }
 

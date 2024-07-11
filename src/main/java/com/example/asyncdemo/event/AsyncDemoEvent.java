@@ -5,11 +5,14 @@ import org.springframework.context.ApplicationEvent;
 
 public class AsyncDemoEvent extends ApplicationEvent {
 
+    private Integer jobId;
+
     public AsyncDemoEvent(JobEntity source) {
         super(source);
+        this.jobId = source.getId();
     }
 
     public Integer getJobId() {
-        return ((JobEntity)getSource()).getId();
+        return this.jobId;
     }
 }
