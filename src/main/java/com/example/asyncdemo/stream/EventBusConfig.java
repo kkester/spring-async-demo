@@ -34,18 +34,18 @@ public class EventBusConfig {
     }
 
     @Bean
-    Declarables amqpCommerceDeclarables() {
+    Declarables amqpAsyncDeclarables() {
         // Commerce queues and bindings
-        var commerceExchange = new TopicExchange(ASYNC_EXCHANGE);
+        var asyncExchange = new TopicExchange(ASYNC_EXCHANGE);
 
-        var productPurchasedQueue = new Queue(Q_ASYNC_JOB);
-        var productPurchasedBinding = BindingBuilder.bind(productPurchasedQueue)
-            .to(commerceExchange)
+        var asyncJobQueue = new Queue(Q_ASYNC_JOB);
+        var asyncJobBinding = BindingBuilder.bind(asyncJobQueue)
+            .to(asyncExchange)
             .with(JOB_ROUTING_KEY);
 
         return new Declarables(
-            commerceExchange,
-            productPurchasedQueue,
-            productPurchasedBinding);
+            asyncExchange,
+            asyncJobQueue,
+            asyncJobBinding);
     }
 }

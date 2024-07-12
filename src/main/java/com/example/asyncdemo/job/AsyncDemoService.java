@@ -5,7 +5,7 @@ import com.example.asyncdemo.stream.AsyncDemoStreamProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.ApplicationEventMulticaster;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -15,18 +15,18 @@ import java.util.Collection;
 @Slf4j
 public class AsyncDemoService {
 
-    private final ApplicationEventMulticaster applicationEventMulticaster;
+    private final ApplicationEventPublisher applicationEventPublisher;
     private final JobEntityRepository jobRepository;
     private final AsyncDemoStreamProducer producer;
 
     public JobEntity createJob() {
 
-        log.info("Creating Job");
+        log.info("Creating Job and triggering application event");
 
         JobEntity job = new JobEntity();
         job.setStatus(JobStatus.NEW);
         jobRepository.save(job);
-        applicationEventMulticaster.multicastEvent(new AsyncDemoEvent(job));
+        applicationEventPublisher.publishEvent(new AsyncDemoEvent(job));
 
         log.info("Completed Creating job {}", job);
 
