@@ -7,6 +7,28 @@ This PoC demonstrates the following architecture, design, and coding strategies:
 1. Spring Application Events processed asynchronously on virtual threads.
 1. Spring Scheduler Leveraging Fixed Rate Batch and Asynchronous Processing. 
 1. Stream Event Triggering and Processing leveraging `RabbitTemplate`.
+1. Spring lifecycle events.
+
+## Spring Lifecycle Application Events
+Run the application and review the `AsyncApplicationEventListener` logging statements.  Spring 
+```text
+2024-07-31T10:39:47.869-05:00  INFO 26249 --- [async-demo] [           main] c.e.a.e.AsyncApplicationEventListener    : Handling application event ApplicationEnvironmentPreparedEvent
+ :: Spring Boot ::                (v3.3.1)
+2024-07-31T10:39:47.943-05:00  INFO 26249 --- [async-demo] [           main] c.e.a.e.AsyncApplicationEventListener    : Handling application event ApplicationContextInitializedEvent
+2024-07-31T10:39:47.945-05:00  INFO 26249 --- [async-demo] [           main] c.e.asyncdemo.AsyncDemoApplication       : Starting AsyncDemoApplication using Java 21.0.3 with PID 26249 
+2024-07-31T10:39:47.986-05:00  INFO 26249 --- [async-demo] [           main] c.e.a.e.AsyncApplicationEventListener    : Handling application event ApplicationPreparedEvent
+2024-07-31T10:39:50.325-05:00  INFO 26249 --- [async-demo] [           main] c.e.a.e.AsyncApplicationEventListener    : Handling application event DockerComposeServicesReadyEvent
+2024-07-31T10:39:51.970-05:00  INFO 26249 --- [async-demo] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-07-31T10:39:51.974-05:00  INFO 26249 --- [async-demo] [ virtual-task-4] c.e.a.e.AsyncApplicationEventListener    : Handling application event ServletWebServerInitializedEvent
+2024-07-31T10:39:52.076-05:00  INFO 26249 --- [async-demo] [ virtual-task-6] c.e.a.e.AsyncApplicationEventListener    : Handling application event AsyncConsumerStartedEvent
+2024-07-31T10:39:52.094-05:00  INFO 26249 --- [async-demo] [ virtual-task-8] c.e.a.e.AsyncApplicationEventListener    : Handling application event ConsumeOkEvent
+2024-07-31T10:39:52.094-05:00  INFO 26249 --- [async-demo] [virtual-task-11] c.e.a.e.AsyncApplicationEventListener    : Handling application event ContextRefreshedEvent
+2024-07-31T10:39:52.095-05:00  INFO 26249 --- [async-demo] [           main] c.e.asyncdemo.AsyncDemoApplication       : Started AsyncDemoApplication in 4.533 seconds (process running for 5.13)
+2024-07-31T10:39:52.096-05:00  INFO 26249 --- [async-demo] [virtual-task-19] c.e.a.e.AsyncApplicationEventListener    : Handling application event ApplicationStartedEvent
+2024-07-31T10:39:52.096-05:00  INFO 26249 --- [async-demo] [virtual-task-21] c.e.a.e.AsyncApplicationEventListener    : Handling application event AvailabilityChangeEvent
+2024-07-31T10:39:52.098-05:00  INFO 26249 --- [async-demo] [virtual-task-26] c.e.a.e.AsyncApplicationEventListener    : Handling application event ApplicationReadyEvent
+2024-07-31T10:39:52.098-05:00  INFO 26249 --- [async-demo] [virtual-task-28] c.e.a.e.AsyncApplicationEventListener    : Handling application event AvailabilityChangeEvent
+```
 
 ## Features
 
